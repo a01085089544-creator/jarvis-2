@@ -11,7 +11,27 @@ if(l.includes('검색'))return search(x);
 if(l.includes('기억')){if(l.includes('보여')){say(localStorage.getItem('jarvis_memory')||'저장된 기억이 없습니다.')}else{localStorage.setItem('jarvis_memory',x);say('이 기기의 기억에 저장했습니다.')}return}
 if(l.includes('이미지')||l.includes('도면')){$('#file').click();return}
 if(l.includes('안녕'))return say('안녕하세요. JARVIS입니다. 현재 연결된 기능을 사용할 준비가 되어 있습니다.');
-say('현재 명령을 이해했지만, 이 웹앱에는 외부 AI 서버가 연결되지 않았습니다. AI 대화를 실제로 사용하려면 API를 서버에 안전하게 연결해야 합니다.')}
+say('생각 중입니다...');
+
+fetch('/api/chat', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({ message: x })
+})
+.then(async r => {
+  const data = await r.json();
+  if (!r.ok) throw new Error(data.error || 'API 오류');
+  return data;
+})
+.then(data => {
+  say(data.reply || data.message || '응답을 받지 못했습니다.');
+})
+.catch(e => {
+  console.error(e);
+  say('AI 서버 연결에 문제가 있습니다. ' + e.message);
+});
 $('#go').onclick=execute;q.addEventListener('keydown',e=>{if(e.key==='Enter')execute()});
 document.querySelectorAll('.quick button').forEach(b=>b.onclick=()=>{q.value=b.dataset.c;execute()});
 $('#mic').onclick=()=>{let SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){say('음성 인식을 지원하지 않는 브라우저입니다. Android Chrome에서 사용하세요.');return}let r=new SR();r.lang='ko-KR';r.interimResults=false;r.maxAlternatives=1;status.textContent='LISTENING';r.onresult=e=>{status.textContent='ONLINE';q.value=e.results[0][0].transcript;execute()};r.onerror=()=>status.textContent='ONLINE';r.start()};
