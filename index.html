@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#06101c">
+<link rel="manifest" href="manifest.webmanifest"><link rel="stylesheet" href="style.css">
+<title>JARVIS v2</title>
+</head>
+<body><div class="app">
+<header><div class="orb"></div><div><b>JARVIS</b><span id="status">ONLINE</span></div></header>
+<section id="chat"><div class="bubble jarvis">시스템 준비 완료. 음성 버튼을 누르거나 명령을 입력하세요.</div></section>
+<div class="quick"><button data-c="현재 위치">📍 위치</button><button data-c="지도 열기">🗺️ 지도</button><button data-c="웹 검색">🌐 검색</button><button data-c="기억 보여줘">💾 기억</button></div>
+<div class="bar"><button id="mic">🎙️</button><input id="q" placeholder="명령을 입력하세요"><button id="go">➤</button></div>
+<div class="actions"><button id="photo">🖼️ 이미지 분석</button><button id="install" hidden>📲 앱 설치</button></div>
+<input id="file" type="file" accept="image/*" hidden>
+</div><script src="app.js"></script></body></html>
