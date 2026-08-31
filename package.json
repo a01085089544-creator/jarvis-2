@@ -1,0 +1,1 @@
+{"name":"jarvis-vercel-server","version":"1.0.0","private":true,"type":"module","dependencies":{"openai":"^5.0.0"}}
